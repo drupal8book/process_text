@@ -1,0 +1,5 @@
+name: process_text
+type: module
+description: Show how tagged services work
+core: 8.x
+package: Drupal 8 book
