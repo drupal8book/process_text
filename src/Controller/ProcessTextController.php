@@ -3,6 +3,8 @@
 namespace Drupal\process_text\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\process_text\TextFilter\RemoveDivs;
+use Drupal\process_text\TextFilter\Greeting;
 
 /**
  * Class ProcessTextController.
@@ -19,11 +21,14 @@ class ProcessTextController extends ControllerBase {
    */
   public function processText() {
     $custom_text = \Drupal::config('process_text.settings')->get('custom_text');
-    // do processing
+    // do processing using a service
+    $filter_service = \Drupal::service('process_text.text_filter');
     // remove divs
-    $custom_text = str_replace(["<div>", "</div>"], "", $custom_text);
-    // replace greeting tokens
-    $custom_text = str_replace("[greeting]", '<span class="greeting">hello world</span>', $custom_text);
+    $filter_service->addFilter(new RemoveDivs());
+    // substitute greeting token
+    $filter_service->addFilter(new Greeting());
+    // apply all the above filters
+    $custom_text = $filter_service->applyFilters($custom_text);
     return [
       '#type' => 'markup',
       '#markup' => $custom_text

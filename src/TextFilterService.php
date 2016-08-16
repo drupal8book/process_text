@@ -17,7 +17,7 @@ class TextFilterService {
    * @param Filter $filter
    */
   public function addFilter(Filter $filter) {
-
+     $this->filters[] = $filter;
   }
 
     /**
