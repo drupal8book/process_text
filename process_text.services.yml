@@ -1,4 +1,20 @@
 services:
   process_text.text_filter:
     class: Drupal\process_text\TextFilterService
+    tags:
+      - { name: service_collector, tag: text_filter, call: addFilter }
 
+  remove_divs_filter:
+    class: Drupal\process_text\TextFilter\RemoveDivs
+    tags:
+      - { name: text_filter }
+
+  greeting_filter:
+    class: Drupal\process_text\TextFilter\Greeting
+    tags:
+      - { name: text_filter }
+
+  enclose_p_filter:
+    class: Drupal\process_text\TextFilter\EnclosePTags
+    tags:
+      - { name: text_filter }

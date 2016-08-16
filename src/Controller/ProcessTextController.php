@@ -24,13 +24,6 @@ class ProcessTextController extends ControllerBase {
     $custom_text = \Drupal::config('process_text.settings')->get('custom_text');
     // do processing using a service
     $filter_service = \Drupal::service('process_text.text_filter');
-    // remove divs
-    $filter_service->addFilter(new RemoveDivs());
-    // substitute greeting token
-    $filter_service->addFilter(new Greeting());
-    // Enclose p tags
-    $filter_service->addFilter(new EnclosePTags());
-    // apply all the above filters
     $custom_text = $filter_service->applyFilters($custom_text);
     return [
       '#type' => 'markup',
