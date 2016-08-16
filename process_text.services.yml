@@ -1,0 +1,4 @@
+services:
+  process_text.text_filter:
+    class: Drupal\process_text\TextFilterService
+
